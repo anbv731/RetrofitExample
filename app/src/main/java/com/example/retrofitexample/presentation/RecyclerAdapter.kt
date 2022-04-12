@@ -1,4 +1,4 @@
-package com.example.retrofitexample
+package com.example.retrofitexample.presentation
 
 import android.content.Context
 import android.text.Html
@@ -7,10 +7,16 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.retrofitexample.databinding.ItemBinding
+import com.example.retrofitexample.model.FishModel
 
 
-class RecyclerAdapter(private val list: List<Model?>, private val context: Context) :
+class RecyclerAdapter(private val context: Context) :
     RecyclerView.Adapter<RecyclerAdapter.FishViewHolder>() {
+    var fish= mutableListOf<FishModel?>()
+    fun setFishList(fish:List<FishModel?>){
+        this.fish=fish.toMutableList()
+        notifyDataSetChanged()
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FishViewHolder {
         val inflater = LayoutInflater.from(parent.context)
@@ -19,30 +25,31 @@ class RecyclerAdapter(private val list: List<Model?>, private val context: Conte
     }
 
     override fun onBindViewHolder(holder: FishViewHolder, position: Int) {
+        val fish=fish[position]
         holder.textView3.setText(
             Html.fromHtml(
-                list.get(position)?.location ?: "",
+                fish?.location ?: "",
                 null,
                 MyTagHandler()
             )
         )
         holder.textView4.setText(
             Html.fromHtml(
-                list.get(position)?.habitat ?: "",
+                fish?.habitat ?: "",
                 null,
                 MyTagHandler()
             )
         )
-        holder.textView1.text = (list.get(position)?.speciesName)
-        holder.textView2.text = (list.get(position)?.scientificName)
-        holder.textViewTitle.text = (list.get(position)?.imageGallery?.title)
+        holder.textView1.text = (fish?.speciesName)
+        holder.textView2.text = (fish?.scientificName)
+        holder.textViewTitle.text = (fish?.imageGallery?.title)
         Glide.with(context)
-            .load(list.get(position)?.imageGallery?.src)
+            .load(fish?.imageGallery?.src)
             .into(holder.imageView)
     }
 
     override fun getItemCount(): Int {
-        return list.size
+        return fish.size
     }
 
     class FishViewHolder(val binding: ItemBinding) : RecyclerView.ViewHolder(binding.root) {
