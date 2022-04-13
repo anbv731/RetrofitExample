@@ -10,16 +10,26 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.retrofitexample.databinding.FragmentBinding
+import com.example.retrofitexample.domain.GetFishUseCase
+import com.example.retrofitexample.model.FishRepositoryImpl
 
 import com.example.retrofitexample.network.Controller
-import com.example.retrofitexample.domain.MainRepository
+import com.example.retrofitexample.model.MainRepository
 
 class FishFragment : Fragment() {
     lateinit var binding: FragmentBinding
     lateinit var recyclerView: RecyclerView
+
+    //    private val viewModel: MainViewModel by lazy {
+//        ViewModelProvider(
+//            this,
+//            MyViewModelFactory(requireContext())
+//        )[MainViewModel::class.java]
+//    }
     lateinit var viewModel: MainViewModel
     private val retrofitService = Controller()
     lateinit var adapter: RecyclerAdapter
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -32,12 +42,15 @@ class FishFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        adapter= RecyclerAdapter(requireContext())
+        adapter = RecyclerAdapter(requireContext())
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
         recyclerView.adapter = adapter
-        viewModel = ViewModelProvider(this, MyViewModelFactory(MainRepository(retrofitService))).get(
-            MainViewModel::class.java)
-        viewModel.fishList.observe(viewLifecycleOwner,Observer{adapter.setFishList(it)})
+
+        viewModel = ViewModelProvider(
+            this,
+            MyViewModelFactory(requireContext())
+        ).get(MainViewModel::class.java)
+        viewModel.fishList.observe(viewLifecycleOwner, Observer { if(it!=null){adapter.setFishList(it) }})
 
 
         viewModel.errorMessage.observe(viewLifecycleOwner, Observer {

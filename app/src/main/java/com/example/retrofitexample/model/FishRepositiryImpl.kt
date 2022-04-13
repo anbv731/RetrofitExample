@@ -1,20 +1,20 @@
 package com.example.retrofitexample.model
 
 import android.content.Context
-import com.example.retrofitexample.domain.FishModel
-import com.example.retrofitexample.domain.FishRepository
 import com.example.retrofitexample.network.Controller
+import com.example.retrofitexample.network.FishService
 
-class FishRepositoryImpl(context: Context) : FishRepository {
+class FishRepositoryImpl(context: Context) :
+    FishRepository {
     private val sharedPreferences =
         context.getSharedPreferences("favourites_names", Context.MODE_PRIVATE)
 
+
+
+
     override suspend fun getFish(): List<FishModel> {
-        return Controller().getApi()
-        return Common.retrofitService.getSpeciesAsync().await().map {
-            it.toFishModel()
+        return Controller().getApi().getData().await()
         }
-    }
 
     override fun saveToFavourites(fish: FishModel) {
         if (isSavedInFavourites(fish)) {

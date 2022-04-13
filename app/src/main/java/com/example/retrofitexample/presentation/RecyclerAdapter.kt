@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.retrofitexample.databinding.ItemBinding
-import com.example.retrofitexample.domain.FishModel
+import com.example.retrofitexample.model.FishModel
 
 
 class RecyclerAdapter(private val context: Context) :
@@ -27,6 +27,7 @@ class RecyclerAdapter(private val context: Context) :
     override fun onBindViewHolder(holder: FishViewHolder, position: Int) {
         val fish=fish[position]
         holder.textView3.setText(
+            
             Html.fromHtml(
                 fish?.location ?: "",
                 null,
@@ -46,12 +47,12 @@ class RecyclerAdapter(private val context: Context) :
         Glide.with(context)
             .load(fish?.imageGallery?.src)
             .into(holder.imageView)
-        favouriteState.isChecked = viewModel.checkIsSavedInFavourites(fish)
-        favouriteState.setOnClickListener {
-            viewModel.saveToFavourites(fish)
-        }
-        if(fish.)
-        holder.addButton.text=
+//        favouriteState.isChecked = viewModel.checkIsSavedInFavourites(fish)
+//        favouriteState.setOnClickListener {
+//            viewModel.saveToFavourites(fish)
+//        }
+//        if(fish.)
+//        holder.addButton.text=
     }
 
     override fun getItemCount(): Int {
