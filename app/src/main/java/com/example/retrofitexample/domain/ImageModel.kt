@@ -1,4 +1,4 @@
-package com.example.retrofitexample.model
+package com.example.retrofitexample.domain
 
 import com.squareup.moshi.Json
 

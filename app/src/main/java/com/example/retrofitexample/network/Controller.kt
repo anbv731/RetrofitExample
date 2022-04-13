@@ -1,5 +1,6 @@
-package com.example.retrofitexample.domain
+package com.example.retrofitexample.network
 
+import com.example.retrofitexample.domain.FishService
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 

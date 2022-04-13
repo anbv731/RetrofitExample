@@ -3,7 +3,7 @@ package com.example.retrofitexample.presentation
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.retrofitexample.domain.MainRepository
-import com.example.retrofitexample.model.FishModel
+import com.example.retrofitexample.domain.FishModel
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

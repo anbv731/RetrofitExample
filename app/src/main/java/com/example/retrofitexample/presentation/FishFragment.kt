@@ -10,7 +10,8 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.retrofitexample.databinding.FragmentBinding
-import com.example.retrofitexample.domain.Controller
+
+import com.example.retrofitexample.network.Controller
 import com.example.retrofitexample.domain.MainRepository
 
 class FishFragment : Fragment() {

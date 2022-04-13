@@ -1,7 +1,7 @@
 package com.example.retrofitexample.domain
 
-import com.example.retrofitexample.model.FishModel
-
-class SaveCase {
-    fun execute(fish: FishModel){}
+class SaveCase (private val repository: FishRepository){
+    fun execute(fish: FishModel){
+        repository.saveToFavourites(fish)
+    }
 }
