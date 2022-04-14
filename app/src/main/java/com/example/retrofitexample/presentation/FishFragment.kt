@@ -10,24 +10,11 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.retrofitexample.databinding.FragmentBinding
-import com.example.retrofitexample.domain.GetFishUseCase
-import com.example.retrofitexample.model.FishRepositoryImpl
-
-import com.example.retrofitexample.network.Controller
-import com.example.retrofitexample.model.MainRepository
 
 class FishFragment : Fragment() {
     lateinit var binding: FragmentBinding
     lateinit var recyclerView: RecyclerView
-
-    //    private val viewModel: MainViewModel by lazy {
-//        ViewModelProvider(
-//            this,
-//            MyViewModelFactory(requireContext())
-//        )[MainViewModel::class.java]
-//    }
-    lateinit var viewModel: MainViewModel
-    private val retrofitService = Controller()
+    lateinit var viewModel: FishViewModel
     lateinit var adapter: RecyclerAdapter
 
     override fun onCreateView(
@@ -42,40 +29,21 @@ class FishFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        adapter = RecyclerAdapter(requireContext())
+        viewModel = ViewModelProvider(
+            this,
+            FishViewModelFactory(requireContext())
+        ).get(FishViewModel::class.java)
+        adapter = RecyclerAdapter(requireContext(), viewModel)
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
         recyclerView.adapter = adapter
 
-        viewModel = ViewModelProvider(
-            this,
-            MyViewModelFactory(requireContext())
-        ).get(MainViewModel::class.java)
-        viewModel.fishList.observe(viewLifecycleOwner, Observer { if(it!=null){adapter.setFishList(it) }})
-
-
+        viewModel.fishList.observe(viewLifecycleOwner, Observer {
+            adapter.setFishList(it)
+        })
         viewModel.errorMessage.observe(viewLifecycleOwner, Observer {
+            println("Error " + it.toString())
 
         })
         viewModel.getAllFish()
-//        val retroApi = Controller().getApi()
-//        retroApi.getData().enqueue(object : Callback<List<FishModel?>> {
-//
-//            override fun onResponse(call: Call<List<FishModel?>>, response: Response<List<FishModel?>>) {
-//                val body = response.body()
-//                if (body != null) {
-//                    val listFishModel: List<FishModel?> = body
-//                    setList(listFishModel)
-//                }
-//            }
-//
-//            override fun onFailure(call: Call<List<FishModel?>>, t: Throwable) {
-//                println("FAIL " + t.toString())
-//            }
-//        })
     }
-
-//    private fun setList(list: List<FishModel?>) {
-//        recyclerView.layoutManager = LinearLayoutManager(requireContext())
-//        recyclerView.adapter = RecyclerAdapter( requireContext())
-//    }
 }

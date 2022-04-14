@@ -9,12 +9,11 @@ import com.bumptech.glide.Glide
 import com.example.retrofitexample.databinding.ItemBinding
 import com.example.retrofitexample.model.FishModel
 
-
-class RecyclerAdapter(private val context: Context) :
+class RecyclerAdapter(private val context: Context, private val viewModel: FishViewModel) :
     RecyclerView.Adapter<RecyclerAdapter.FishViewHolder>() {
-    var fish= mutableListOf<FishModel?>()
-    fun setFishList(fish:List<FishModel?>){
-        this.fish=fish.toMutableList()
+    var fish = mutableListOf<FishModel?>()
+    fun setFishList(fish: List<FishModel?>) {
+        this.fish = fish.toMutableList()
         notifyDataSetChanged()
     }
 
@@ -25,9 +24,9 @@ class RecyclerAdapter(private val context: Context) :
     }
 
     override fun onBindViewHolder(holder: FishViewHolder, position: Int) {
-        val fish=fish[position]
+        val fish = fish[position]
         holder.textView3.setText(
-            
+
             Html.fromHtml(
                 fish?.location ?: "",
                 null,
@@ -47,12 +46,15 @@ class RecyclerAdapter(private val context: Context) :
         Glide.with(context)
             .load(fish?.imageGallery?.src)
             .into(holder.imageView)
-//        favouriteState.isChecked = viewModel.checkIsSavedInFavourites(fish)
-//        favouriteState.setOnClickListener {
-//            viewModel.saveToFavourites(fish)
-//        }
-//        if(fish.)
-//        holder.addButton.text=
+        if (viewModel.isSavedInFavourite(fish!!)) {
+            holder.addButton.text = "Удалить из избранного"
+        } else {
+            holder.addButton.text = "Добавить в избранное"
+        }
+        holder.addButton.setOnClickListener {
+            viewModel.saveToFavourite(fish)
+            notifyDataSetChanged()
+        }
     }
 
     override fun getItemCount(): Int {
@@ -66,6 +68,6 @@ class RecyclerAdapter(private val context: Context) :
         val textView4 = binding.textView4
         val textViewTitle = binding.textViewTitle
         val imageView = binding.image
-        val addButton=binding.addButton
+        val addButton = binding.addButton
     }
 }

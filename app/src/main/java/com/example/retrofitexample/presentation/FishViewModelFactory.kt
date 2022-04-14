@@ -7,18 +7,18 @@ import com.example.retrofitexample.domain.GetFishUseCase
 import com.example.retrofitexample.domain.IsSavedUseCase
 import com.example.retrofitexample.domain.SaveUseCase
 import com.example.retrofitexample.model.FishRepositoryImpl
-import com.example.retrofitexample.model.MainRepository
 
-class MyViewModelFactory constructor(context:Context,
+
+class FishViewModelFactory constructor(
+    context: Context,
 ) : ViewModelProvider.Factory {
     private val fishRepository = FishRepositoryImpl(context)
     private val getFishUseCase = GetFishUseCase(fishRepository)
     private val saveToFavoritesUseCase = SaveUseCase(fishRepository)
     private val isSaveUseCase = IsSavedUseCase(fishRepository)
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        return if (modelClass.isAssignableFrom(MainViewModel::class.java)) {
-            MainViewModel(
-                this.fishRepository,
+        return if (modelClass.isAssignableFrom(FishViewModel::class.java)) {
+            FishViewModel(
                 getFishUseCase,
                 saveToFavoritesUseCase,
                 isSaveUseCase
