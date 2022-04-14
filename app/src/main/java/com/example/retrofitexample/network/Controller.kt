@@ -1,8 +1,7 @@
-package com.example.retrofitexample
+package com.example.retrofitexample.network
 
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
-
 
 class Controller {
     private val BASE_URL = "https://www.fishwatch.gov/api/"
@@ -16,4 +15,5 @@ class Controller {
     }
 
 }
+
 

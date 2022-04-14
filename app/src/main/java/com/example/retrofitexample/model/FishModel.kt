@@ -1,8 +1,8 @@
-package com.example.retrofitexample
+package com.example.retrofitexample.model
 
 import com.squareup.moshi.Json
 
-data class Model(
+data class FishModel(
     @field:Json(name = "Species Name") val speciesName: String?,
     @field:Json(name = "Location") val location: String?,
     @field:Json(name = "Habitat") val habitat: String?,

@@ -1,7 +1,8 @@
-package com.example.retrofitexample
+package com.example.retrofitexample.presentation
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.example.retrofitexample.R
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
